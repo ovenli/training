@@ -1,0 +1,212 @@
+<template lang="pug">
+  footer.nav-footer
+
+    .footer-wrapper: .footer-container
+
+      .row.links
+        .wrapper: a(href='http://china.nba.com' target="_blank")
+          i.logo.logo-com
+        .wrapper: a(href='http://china.nba.com/jrnba/' target="_blank")
+          i.logo.logo-jr
+        .wrapper: a(href='http://china.nba.com/nbaapp/' target="_blank")
+          i.logo.logo-app
+
+      .row.links
+        .wrapper: a(href='http://www.ttnba.cn' target="_blank")
+          i.logo.logo-tian
+        .wrapper: a(href='http://www.nbastore.cn' target="_blank")
+          i.logo.logo-store
+        .wrapper: router-link(:to="STORES_URL")
+          img.logo.NBAlogo(src="./images/nba_logo.svg")
+
+      .row.about
+        .wrapper
+          router-link(:to="ABOUT_QMQ_URL") {{ $t("about.about_qmq") }}
+        .slash
+        .wrapper
+          router-link(:to="ABOUT_TERMS_URL") {{$t("about.terms_conditions") }}
+        .slash
+        .wrapper
+          router-link(:to="ABOUT_FAQ_URL") {{$t("about.faq") }}
+        .slash
+        .wrapper
+          router-link(:to="ABOUT_PRIVACY_URL") {{ $t("about.privacy_policy") }}
+
+      .row.register
+        p 京ICP备15012007号-2
+</template>
+
+
+<script>
+
+import Vue from 'vue'
+import localeSelector from '../forms/localeSelector'
+import { ABOUT_TERMS_URL, ABOUT_QMQ_URL, ABOUT_FAQ_URL, ABOUT_PRIVACY_URL, STORES_URL } from '../../constants/routes'
+
+export default Vue.component('navFooter', {
+
+  data: () => ({
+    ABOUT_TERMS_URL,
+    ABOUT_FAQ_URL,
+    ABOUT_QMQ_URL,
+    ABOUT_PRIVACY_URL,
+    STORES_URL
+  }),
+
+  components: {
+    localeSelector
+  }
+
+})
+
+</script>
+
+
+<style lang="sass" rel="stylesheet/sass" scoped>
+@import "src/common/common.sass"
+
+a
+  font-size: $font-size-s
+
+.nav-footer
+  position: relative
+  width: 100%
+  background-color: $color-lightestGrey
+  margin: 0
+  padding: 10px 0
+  z-index: $layer-1
+
+  +is-desktop
+    background-color: transparent
+    color: $color-white
+    height: $footer-height
+    padding: 0
+
+    .footer-wrapper
+      bottom: 0
+      height: $footer-height
+      left: 0
+      margin: 0 auto
+      max-width: $page-max_width
+      position: fixed
+      right: 0
+
+    a
+      color: $color-white
+    .slash
+      background-color: $color-white
+    .row
+      box-sizing: border-box
+      margin:
+        left: 0
+        right: 0
+      &.links
+        flex: 0 0 25%
+        &:first-child
+          padding-left: $footer-desktop-margin
+        &:nth-child(2)
+          padding-right: $footer-desktop-margin
+      &.about
+        flex: 0 0 30%
+        margin-left: auto
+      &.register
+        margin:
+          right: $footer-desktop-margin
+          left: $footer-desktop-margin
+        width: auto
+
+.footer-wrapper
+  +fill
+
+.footer-container
+  +is-desktop
+    position: relative
+    display: flex
+    align-items: center
+    width: 100%
+    max-width: $page-max_width
+    background-color: $color-middleblue
+    margin: 0 auto
+    height: $footer-height
+
+.row
+  // height: 50%
+  width: 100%
+  height: 36px
+  margin: 0
+  padding: 0
+  text-align: center
+  +flex-center()
+  flex-direction: row
+
+
+.row
+  display: flex
+  flex-direction: row
+  align-items: center
+
+.wrapper
+  position: relative
+  flex: 1
+  height: 100%
+  +flex-center()
+  a
+    +fill
+    +flex-center
+
+.links
+  width: 94%
+  margin: 0 auto
+
+  .logo
+    +picture
+    max-width: 62%
+    max-height: 50%
+
+    &-com
+      background-image: url(./images/1nbaCom.png)
+      +is-desktop
+        background-image: url(./images/1nbaCom_w.png)
+    &-jr
+      background-image: url(./images/2jr.png)
+      +is-desktop
+        background-image: url(./images/2jr_w.png)
+    &-app
+      background-image: url(./images/3NBAapp.png)
+      +is-desktop
+        background-image: url(./images/3NBAapp_w.png)
+    &-tian
+      background-image: url(./images/4tiantianNBA.png)
+      +is-desktop
+        background-image: url(./images/4tiantianNBA_w.png)
+    &-store
+      background-image: url(./images/5nbaStoreCN.png)
+      +is-desktop
+        background-image: url(./images/5nbaStoreCN_w.png)
+
+.about
+
+  // .slash
+  //   flex: 0
+  //   font-size: $font-size-l
+  //   font-family: Times
+
+
+.slash
+  margin: 0 0em
+  height: 16px
+  width: 1px
+  background: black
+  transform-origin: 50%
+  transform: rotate(45deg)
+
+
+.register p
+  font-size: $font-size-xs
+
+button
+  height: 33px
+  width: 100%
+  margin: 2px
+
+</style>

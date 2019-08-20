@@ -1,0 +1,299 @@
+<template lang="pug">
+  footer.nav-footer
+
+    .footer-wrapper
+      .footer-container
+        .functions
+          .title_wraper
+            .title {{ $t("about.usual") }}
+            ul(class="fn_item" ref="fn_ul" v-if="isDesktop")
+              a(href="http://pointmall.nbaqmq.com/Client/homepage.aspx?token=fbf986b3e977e8732ef8&hash=a808ae06fc9abc6c72727b646656b41f" target="_blank" v-on:click = 'track("兑换积分")'): li {{ $t("about.usual_sub1") }}
+              a(href="http://sports.qq.com/kbsweb/#nba" target="_blank" v-on:click = 'track("观看比赛")'): li {{ $t("about.usual_sub2") }}
+              a(href="/browse" target="_blank" v-on:click = 'track("阅读文章")'): li {{ $t("about.usual_sub3") }}
+              a(href="/badge/tasks" target="_blank" v-on:click = 'track("完成任务")'): li {{ $t("about.usual_sub4") }}
+              router-link(:to="BROWSE_URL"): li {{ $t("about.usual_sub3") }}
+              router-link(:to="BADGE_TASKS_URL"): li {{ $t("about.usual_sub4") }}
+            ul(class="fn_item" ref="fn_ul" v-if="changefn")
+              a(href="http://pointmall.nbaqmq.com/Client/homepage.aspx?token=fbf986b3e977e8732ef8&hash=a808ae06fc9abc6c72727b646656b41f" target="_blank" v-on:click = 'track("兑换积分")'): li {{ $t("about.usual_sub1") }}
+              a(href="http://sports.qq.com/kbsweb/#nba" target="_blank" v-on:click = 'track("观看比赛")'): li {{ $t("about.usual_sub2") }}
+              router-link(:to="BROWSE_URL"): li {{ $t("about.usual_sub3") }}
+              router-link(:to="BADGE_TASKS_URL"): li {{ $t("about.usual_sub4") }}
+          .title_icon
+            img(src='./images/footer_add.png' v-on:click = 'showfn' ref="fn_add" v-if="!changefn")
+            img(src='./images/footer_minus.png' v-on:click = 'hidefn' ref="fn_add" v-if="changefn")
+        .about_qmq
+          .title_wraper
+            .title 关于球迷圈
+            ul(class="qmq_item" ref="qmq_ul" v-if="isDesktop")
+              router-link(:to="ABOUT_QMQ_URL"): li 新手指南
+              router-link(:to="ABOUT_FAQ_URL"): li 常见问题
+              router-link(:to="ABOUT_TERMS_URL"): li 使用条款
+              router-link(:to="ABOUT_PRIVACY_URL"): li 隐私政策
+              router-link(:to="CONTACT_URL"): li 联系我们
+            ul(class="qmq_item" ref="qmq_ul" v-if="changeqmq")
+              router-link(:to="ABOUT_QMQ_URL"): li 新手指南
+              router-link(:to="ABOUT_FAQ_URL"): li 常见问题
+              router-link(:to="ABOUT_TERMS_URL"): li 使用条款
+              router-link(:to="ABOUT_PRIVACY_URL"): li 隐私政策
+              router-link(:to="CONTACT_URL"): li 联系我们
+          .title_icon
+            img(src='./images/footer_add.png' v-on:click = 'showqmq' ref="qmq_add" v-if="!changeqmq")
+            img(src='./images/footer_minus.png' v-on:click = 'hideqmq' ref="qmq_add" v-if="changeqmq")
+        .about_nba
+          .title_wraper
+            .title 关于NBA
+            ul(class="nba_item" ref="nba_ul" v-if="isDesktop")
+              a(href="http://china.nba.com" target="_blank" v-on:click = 'track("NBA.com")'): li NBA.com
+              a(href="http://china.nba.com/jrnba/" target="_blank" v-on:click = 'track("jr.nba")'): li jr.nba
+              a(href="http://www.ttnba.cn" target="_blank" v-on:click = 'track("天天 NBA")'): li 天天 NBA
+              a(href="https://www.nbastore.cn" target="_blank" v-on:click = 'track("NBA 商店")'): li NBA 商店
+              router-link(:to="STORES_URL"): li 查找商店
+            ul(class="nba_item" ref="nba_ul" v-if="changenba")
+              a(href="http://china.nba.com" target="_blank" v-on:click = 'track("NBA.com")'): li NBA.com
+              a(href="http://china.nba.com/jrnba/" target="_blank" v-on:click = 'track("jr.nba")'): li jr.nba
+              a(href="http://china.nba.com/nbaapp/" target="_blank" v-on:click = 'track("NBA APP")'): li NBA APP
+              a(href="http://www.ttnba.cn" target="_blank" v-on:click = 'track("天天 NBA")'): li 天天 NBA
+              a(href="https://www.nbastore.cn" target="_blank" v-on:click = 'track("NBA 商店")'): li NBA 商店
+              router-link(:to="STORES_URL"): li 查找商店
+          .title_icon
+            img(src='./images/footer_add.png' v-on:click = 'shownba' ref="nba_add" v-if="!changenba")
+            img(src='./images/footer_minus.png' v-on:click = 'hidenba' ref="nba_add" v-if="changenba")
+        .download
+          .title.title2 下载 NBA APP
+          .qr_img
+            img(src='./images/footer_qr1.png')
+        .follow
+          .title.title2 关注NBA微信公众号
+          .qr_img
+            img(src='./images/footer_qr3.png')
+      .bottom_text_wrapper
+        .bottom_text
+          p(class="copyright_up") 京ICP备15012007号-2
+          p(class="copyright_down") &copy;2018年著作权 NBA 中国 所有权保留
+</template>
+
+
+<script>
+
+import Vue from 'vue'
+import localeSelector from '../forms/localeSelector'
+import { ABOUT_TERMS_URL, ABOUT_QMQ_URL, ABOUT_FAQ_URL, ABOUT_PRIVACY_URL, STORES_URL, CONTACT_URL, BROWSE_URL, BADGE_TASKS_URL } from '../../constants/routes'
+import {analytics} from 'src/services/analyticsService.js'
+export default Vue.component('navFooter', {
+
+  data: () => ({
+    ABOUT_TERMS_URL,
+    ABOUT_FAQ_URL,
+    ABOUT_QMQ_URL,
+    ABOUT_PRIVACY_URL,
+    STORES_URL,
+    BADGE_TASKS_URL,
+    BROWSE_URL,
+    CONTACT_URL,
+    changefn: false,
+    changeqmq: false,
+    changenba: false
+  }),
+  computed: {
+    isDesktop: function () {
+      return this.$store.state.ui.device.desktop
+    }
+  },
+  components: {
+    localeSelector
+  },
+
+  methods: {
+    showfn: function() {
+      this.changefn = true
+      this.changeqmq = false
+      this.changenba = false
+    },
+    showqmq: function() {
+      this.changeqmq = true
+      this.changefn = false
+      this.changenba = false
+    },
+    shownba: function() {
+      this.changenba = true
+      this.changefn = false
+      this.changeqmq = false
+    },
+    hidefn: function() {
+      this.changefn = false
+    },
+    hideqmq: function() {
+      this.changeqmq = false
+    },
+    hidenba: function() {
+      this.changenba = false
+    },
+    track: function(str) {
+      analytics.sendEvent('button', 'click', 'footer', '', 'footer_externallink_click', {footer_link_name: str})
+    }
+  }
+})
+
+</script>
+
+
+<style lang="sass" rel="stylesheet/sass" scoped>
+@import "src/common/common.sass"
+ul
+  margin: 0
+  padding: 0
+  list-style: none
+  li
+    color: #5f5f5f
+    font-size: 0.7em
+    line-height: 2.5em
+    padding-left: 10%
+    font-family: textFont, Arial, sans-serif
+    +is-desktop
+      color: #fff
+      font-size: 0.6em
+      padding-left: 0
+      line-height: 2em
+.title
+  color: #1d428a
+  font-size: 0.8em
+  font-weight: bold
+  padding-left: 20px
+  border-bottom: 1px solid rgb(214,214,214)
+  background: #ebebeb
+  padding-top: 10px
+  padding-bottom: 10px
+  font-family: textFont, Arial, sans-serif
+  +is-desktop
+    font-weight: normal
+    color: #fff
+    margin-bottom: 5px
+    font-size: 0.8em
+    padding: 0
+    background: none
+    border-bottom: none
+.title2
+  text-align: center
+.title_wraper
+  +is-desktop
+    margin: 0 auto
+    width: 65px
+.title_icon
+  width: 10px
+  display: inline-block
+  position: absolute
+  right: 20px
+  top: 0
+  +is-desktop
+    display: none
+  img
+    width: 100%
+    margin-top: 15px
+.bottom_text_wrapper
+  background: #ebebeb
+  +is-desktop
+    background: none
+.nav-footer
+  width: 100%
+  +is-desktop
+    height: 200px
+    background-image: url(./images/footer_background.png)
+  .footer-wrapper
+    width: 100%
+    height: 100%
+    .footer-container
+      width: 100%
+      height: 90%
+      +is-desktop
+        width: 70%
+      margin: 0 auto
+      .functions
+        width: 100%
+        position: relative
+        .fn_item
+          display: block
+        +is-desktop
+          background: none
+          border-bottom: none
+          height: auto
+          margin-top: 30px
+          float: left
+          width: 20%
+          .fn_item
+            display: block
+      .about_qmq
+        width: 100%
+        position: relative
+        .qmq_item
+          display: block
+        +is-desktop
+          background: none
+          border-bottom: none
+          margin-top: 30px
+          float: left
+          width: 20%
+          .qmq_item
+            display: block
+      .about_nba
+        width: 100%
+        position: relative
+        .nba_item
+          display: block
+        +is-desktop
+          background: none
+          border-bottom: none
+          margin-top: 30px
+          width: 20%
+          float: left
+          .nba_item
+            display: block
+      .download
+        width: 20%
+        margin-top: 30px
+        display: none
+        +is-desktop
+          float: left
+          display: block
+        .qr_img
+          width: 80px
+          margin: 0 auto
+          margin-top: 12px
+          img
+            width: 100%
+      .follow
+        width: 20%
+        margin-top: 30px
+        display: none
+        +is-desktop
+          float: left
+          display: block
+        .qr_img
+          width: 80px
+          margin: 0 auto
+          margin-top: 12px
+          img
+            width: 100%
+    .bottom_text
+      width: 80%;
+      margin: 0 auto;
+      text-align: center
+      color: #1d428a
+      font-size: 0.5em
+      font-weight: bold
+      p
+        margin: 0
+        font-family: textFont, Arial, sans-serif
+      .copyright_up
+        padding-top: 10px
+      .copyright_down
+        padding-bottom: 10px
+      +is-desktop
+        color: #fff
+        p
+          display: inline-block
+        .copyright_down
+          padding-left: 5px
+          padding-bottom: 0
+        .copyright_up
+          padding-top: 0
+</style>
